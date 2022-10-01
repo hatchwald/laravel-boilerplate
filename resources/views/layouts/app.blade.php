@@ -9,26 +9,31 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
+            
+            
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="flex">
+                    {{-- Navbar --}}
+                    <div class="block w-1/5 sm:hidden md:block lg:block h-screen shadow-md bg-white " id="">
+                        <x-sidebar>
+                            
+                        </x-sidebar>
+                    </div>
+                    
+                    
+                    <!-- main content page -->
+                    <div class="w-4/5">
+                        @include('layouts.navigation')
+                        {{ $slot }}
+                    </div>
+                </div>   
             </main>
         </div>
     </body>
