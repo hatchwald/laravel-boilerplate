@@ -18,22 +18,27 @@
         <span><i class='bx bx-user-pin'></i> DASHBOARD</span>
       </a>
     </li>
+    @if(auth()->user()->can('user-view'))
     <li class="relative">
       <a class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden {{Request::is("user") ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}} text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out" href="/dashboard" data-mdb-ripple="true" data-mdb-ripple-color="primary">
         <span><i class='bx bx-user-pin'></i> USER</span>
       </a>
     </li>
+    @endif
+    @if(auth()->user()->can('role-view'))
     <li class="relative">
       <a class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden {{Request::is("role") ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}} text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out" href="/dashboard" data-mdb-ripple="true" data-mdb-ripple-color="primary">
         <span><i class='bx bx-user-pin'></i> ROLE</span>
       </a>
     </li>
+    @endif
+    @if(auth()->user()->can('role-view'))
     <li class="relative">
       <a class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden {{Request::is("content") ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}} text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out" href="/dashboard" data-mdb-ripple="true" data-mdb-ripple-color="primary">
         <span><i class='bx bx-user-pin'></i> CONTENT</span>
       </a>
     </li>
-   
+    @endif
     {{-- <li class="relative" id="sidenavSecEx2">
       <a class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer" data-mdb-ripple="true" data-mdb-ripple-color="primary" data-bs-toggle="collapse" data-bs-target="#collapseSidenavSecEx2" aria-expanded="false" aria-controls="collapseSidenavSecEx2">
         <svg aria-hidden="true" focusable="false" data-prefix="fas" class="w-3 h-3 mr-3" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
