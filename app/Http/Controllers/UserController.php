@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Contants\Roles;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -35,7 +40,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $userRole = Auth::user()->roles[0]->name;
+        if ($userRole !== Roles::ADMIN) {
+            $roles = Role::whereNotIn('name', ['ADMIN'])->get();
+        } else {
+            $roles = Role::all()->pluck('name');
+        }
+        return view('user.create', compact('roles'));
     }
 
     /**
@@ -46,7 +57,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required',
+            'name' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            // dd($validated);
+            $validated['password'] = bcrypt(Str::random(20));
+            // dd($validated);
+            $user = User::create($validated);
+            $user->assignRole($request->role);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            if (env('APP_ENV') !== 'production') {
+                throw $th;
+            }
+            return redirect()->route('users.create')->withErrors('Something went wrong with the server')->withInput();
+        }
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     /**
