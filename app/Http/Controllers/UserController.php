@@ -102,7 +102,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
+        return view('user.edit', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -114,7 +117,26 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+            'role' => 'required',
+            'name' => 'required',
+        ]);
+        try {
+            DB::beginTransaction();
+            $request->only(['role', 'name', 'status']);
+            $data = $request->all();
+            $user->assignRole($request->role);
+            $user = $user->update($data);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            if (env('APP_ENV') !== 'production') {
+                throw $th;
+            }
+            return redirect()->route('users.edit')->withErrors('Something went wrong with the server')->withInput();
+        }
+        return redirect()->route('users.index')->with('success', 'User update successfully');
     }
 
     /**
