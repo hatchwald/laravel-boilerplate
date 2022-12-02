@@ -27,7 +27,7 @@
     @endif
     @if(auth()->user()->can('role-view'))
     <li class="relative">
-      <a class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden {{Request::is("role") ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}} text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out" href="/dashboard" data-mdb-ripple="true" data-mdb-ripple-color="primary">
+      <a class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden {{(Request::is("roles") || Request::is("roles/*")) ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}} text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out" href="/roles" data-mdb-ripple="true" data-mdb-ripple-color="primary">
         <span><i class='bx bx-user-pin'></i> ROLE</span>
       </a>
     </li>
