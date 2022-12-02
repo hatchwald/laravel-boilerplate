@@ -30,7 +30,8 @@ class UserController extends Controller
     public function index()
     {
         $user = User::with('roles')->get();
-        return view('user.index', compact('user'));
+        $currentUser = Auth::user();
+        return view('user.index', compact('user','currentUser'));
     }
 
     /**

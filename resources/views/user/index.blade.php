@@ -52,7 +52,9 @@
                                                         <a href="/users/{{$users->id}}/edit"><i class='bx bx-pencil'></i> Update</a>
                                                         @endcan
                                                         @can('user-delete')
+                                                        @if ($currentUser->email != $users->email)
                                                         <a href="#"><i class='bx bxs-trash' ></i> Delete</a>
+                                                        @endif
                                                         @endcan
                                                     </td>
                                                     
